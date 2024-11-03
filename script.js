@@ -1,4 +1,4 @@
-const ws = new WebSocket('ws://localhost:8080'); // Replace with your server URL
+const ws = new WebSocket('ws://nodechatapp-7dk4.onrender.com'); // Replace with your server URL
 const messagesDiv = document.getElementById('messages');
 const messageInput = document.getElementById('messageInput');
 const sendButton = document.getElementById('sendButton');
@@ -84,7 +84,7 @@ ws.onclose = () => {
     console.log('WebSocket connection closed.');
     setTimeout(() => {
         console.log('Reconnecting...');
-        ws = new WebSocket('ws://localhost:8080');
+        ws = new WebSocket('ws://nodechatapp-7dk4.onrender.com');
     }, 3000);
 };
 
