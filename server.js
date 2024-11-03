@@ -1,88 +1,37 @@
-
-
-
-
-
-
-
-
 const WebSocket = require('ws');
-const mongoose = require('mongoose');
-const express = require('express');
-const app = express();
-const port = 3000;
 
-app.get('index.html', (req, res) => {
-    res.send('Hello, World!');
-});
-app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
-});
-// Connect to MongoDB without deprecated options
-mongoose.connect('mongodb+srv://mscorp7:mscorp7777@mscorp1.d5y2q.mongodb.net/mscorp77')
-//
-    .then(() => console.log('MongoDB connected successfully'))
-    .catch(err => console.error('MongoDB connection error:', err));
+const server = new WebSocket.Server({ port: 8080 });
 
-const messageSchema = new mongoose.Schema({
-    user: String,
-    message: String,
-    timestamp: { type: Date, default: Date.now },
-});
-
-const Message = mongoose.model('Message', messageSchema);
-
-// Set up Express and WebSocket
-const server = require('http').createServer(app);
-const wss = new WebSocket.Server({ server });
-
-// WebSocket connection
-// WebSocket connection
-wss.on('connection', (ws) => {
+server.on('connection', (socket) => {
     console.log('New client connected');
 
-    // Send message history when a client connects
-    Message.find().then(messages => {
-        messages.forEach(msg => {
-            ws.send(JSON.stringify({ user: msg.user, message: msg.message }));
-        });
-    });
+    socket.on('message', (message) => {
+        // Check if the message is a Buffer (binary data)
+        if (Buffer.isBuffer(message)) {
+            // Convert the Buffer to a string for text data
+            const decodedMessage = message.toString('utf-8');
+            console.log('Received (as string):', decodedMessage);
 
-    // Handle incoming messages
-    ws.on('message', async (data) => {
-        try {
-            const parsedData = JSON.parse(data.toString());
-            console.log('Received message:', parsedData);
-
-            // Create and save a new message document
-            const newMessage = new Message({
-                user: parsedData.user,
-                message: parsedData.message,
-            });
-
-            await newMessage.save();
-
-            // Broadcast the new message to all connected clients
-            wss.clients.forEach(client => {
-                if (client !== ws && client.readyState === WebSocket.OPEN) {
-                    client.send(JSON.stringify({
-                        user: newMessage.user,
-                        message: newMessage.message,
-                    }));
+            // Broadcast the decoded message to all clients
+            server.clients.forEach((client) => {
+                if (client !== socket && client.readyState === WebSocket.OPEN) {
+                    client.send(decodedMessage);
                 }
             });
-        } catch (error) {
-            console.error('Error processing message:', error);
+        } else {
+            // Log and send text messages directly
+            console.log('Received:', message);
+            server.clients.forEach((client) => {
+                if (client !== socket && client.readyState === WebSocket.OPEN) {
+                    client.send(message);
+                }
+            });
         }
     });
 
-    ws.on('close', () => {
+    socket.on('close', () => {
         console.log('Client disconnected');
     });
 });
 
-// Start the server
-const PORT = process.env.PORT || 8080;
-server.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
-});
+console.log('WebSocket server is running on ws://localhost:8080');
