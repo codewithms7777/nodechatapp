@@ -2,7 +2,19 @@ const WebSocket = require('ws');
 const mongoose = require('mongoose');
 const express = require('express');
 
+const app = express();
+const http = require('http').createServer(app);
+const PORT = process.env.PORT || 3000;
+app.use(express.static('public')); // Ensure you have a 'public' folder with files
 
+// Serve a simple response or an HTML file for the root route
+app.get('/', (req, res) => {
+  res.send('Welcome to the chat app!');
+});
+
+http.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 // Connect to MongoDB without deprecated options
 mongoose.connect('mongodb+srv://mscorp7:mscorp7777@mscorp1.d5y2q.mongodb.net/mscorp77')
     .then(() => console.log('MongoDB connected successfully'))
