@@ -1,0 +1,136 @@
+
+#chatContainer {
+      width: 500px;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+  }
+  
+  #messages {
+      flex-grow: 1;
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 300px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+  }
+  
+  .message {
+      max-width: 70%;
+      margin: 5px;
+      padding: 10px;
+      border-radius: 10px;
+      word-wrap: break-word;
+  }
+  
+  .self {
+      background-color: red;
+      color: white;
+      align-self: flex-end;
+      text-align: right;
+      margin-left: auto;
+  }
+  
+  .other {
+      background-color: blue;
+      color: white;
+      align-self: flex-start;
+      text-align: left;
+      margin-right: auto;
+  }
+  
+  body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, red, blue);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+  }
+  
+  #chatContainer {
+      width: 500px;
+      max-width: 90%;
+      margin: 20px auto;
+      border: 2px solid #aaa;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+  }
+  
+  #messages {
+      flex-grow: 1;
+      border-top: 1px solid #ccc;
+      padding: 10px;
+      height: 300px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      background-color: #f9f9f9;
+  }
+  
+  .message {
+      max-width: 70%;
+      margin: 5px 10px;
+      padding: 10px;
+      border-radius: 10px;
+      word-wrap: break-word;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      font-size: 14px;
+  }
+  
+  .self {
+      background-color: #ff4d4d;
+      color: white;
+      align-self: flex-end;
+      text-align: right;
+      margin-left: auto;
+  }
+  
+  .other {
+      background-color: #007bff;
+      color: white;
+      align-self: flex-start;
+      text-align: left;
+      margin-right: auto;
+  }
+  
+  input[type="text"] {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 8px;
+      width: calc(100% - 90px);
+      margin-right: 5px;
+      font-size: 14px;
+  }
+  
+  button {
+      padding: 8px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+  }
+  
+  button:hover {
+      background-color: #0056b3;
+  }
+  
+  input[type="file"] {
+      margin-top: 5px;
+  }
+  
+  #chatContainer input[type="text"], #chatContainer button {
+      margin-top: 10px;
+  }
