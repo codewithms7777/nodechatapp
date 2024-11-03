@@ -4,7 +4,7 @@ const express = require('express');
 
 
 // Connect to MongoDB without deprecated options
-mongoose.connect('mongodb://localhost:27017/chatApp')
+mongoose.connect('mongodb+srv://mscorp7:mscorp7777@mscorp1.d5y2q.mongodb.net/mscorp77')
     .then(() => console.log('MongoDB connected successfully'))
     .catch(err => console.error('MongoDB connection error:', err));
 
