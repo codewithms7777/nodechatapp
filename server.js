@@ -1,4 +1,4 @@
-const WebSocket = require('wss');
+const WebSocket = require('ws');
 
 const PORT = process.env.PORT || 8080; // Use environment variable or default to 8080
 
@@ -47,4 +47,4 @@ server.on('connection', (socket) => {
     });
 });
 
-console.log(`WebSocket server is running on wss://localhost:${PORT}`);
+console.log(`WebSocket server is running on ws://localhost:${PORT}`);
