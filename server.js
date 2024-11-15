@@ -23,14 +23,11 @@ server.on('connection', (socket) => {
             }
 
             // Broadcast the decoded message to all other connected clients
-            for (const client of server.clients) {
-    if (client !== socket && client.readyState === WebSocket.OPEN) {
-        client.send(decodedMessage, (error) => {
-            if (error) console.error('Broadcast error:', error);
-        });
-    }
-}
-
+            server.clients.forEach((client) => {
+                if (client !== socket && client.readyState === WebSocket.OPEN) {
+                    client.send(decodedMessage);
+                }
+            });
         } catch (err) {
             console.error('Error handling message:', err);
         }
