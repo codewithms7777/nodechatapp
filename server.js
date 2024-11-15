@@ -1,4 +1,4 @@
-const WebSocket = require('ws');
+const WebSocket = require('wss');
 
 const PORT = process.env.PORT || 8080; // Use environment variable or default to 8080
 
@@ -23,11 +23,14 @@ server.on('connection', (socket) => {
             }
 
             // Broadcast the decoded message to all other connected clients
-            server.clients.forEach((client) => {
-                if (client !== socket && client.readyState === WebSocket.OPEN) {
-                    client.send(decodedMessage);
-                }
-            });
+            for (const client of server.clients) {
+    if (client !== socket && client.readyState === WebSocket.OPEN) {
+        client.send(decodedMessage, (error) => {
+            if (error) console.error('Broadcast error:', error);
+        });
+    }
+}
+
         } catch (err) {
             console.error('Error handling message:', err);
         }
@@ -44,4 +47,4 @@ server.on('connection', (socket) => {
     });
 });
 
-console.log(`WebSocket server is running on ws://localhost:${PORT}`);
+console.log(`WebSocket server is running on wss://localhost:${PORT}`);
